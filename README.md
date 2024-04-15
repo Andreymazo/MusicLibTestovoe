@@ -9,7 +9,7 @@ or if you prefer SSH
 ##
         git clone git@github.com:Andreymazo/MusicLibTestovoe.git
 
-#Start:
+# Start:
 ```cmd
 docker-compose up
 ```
