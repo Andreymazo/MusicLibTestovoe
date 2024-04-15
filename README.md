@@ -15,11 +15,18 @@ docker-compose up
 ```
 
 
-Django forms are used here (Easy registaration and login in django). 5 endpoints: 1. Registartion without confirmation. 2. Login. 3. Authenticated user comes here, can view his treks. Filter via forms. 4. can add 5. can cut (Message when cutted) and return to 2 endpoint. Client doesnt see 5 endpoint, and everything could run without it, but if additional task with mp3 file comes, we will do it quite easy on it without bothering other functionality.
+Django forms are used here (Easy registaration and login in django).   
+5 endpoints:   
+1. Registartion without confirmation.   
+2. Login.   
+3. Authenticated user comes here, can view his treks. Filter via forms.   
+4. can add   
+5. can cut (Message when cutted) and return to 2 endpoint. Client doesnt see 5 endpoint, and everything could run without it, but if additional task with mp3 file comes, we will do it quite easy on it without bothering other functionality.
 
 
-If quistions arise dont hezitate to ask them, will answere with pleasure
-+79219507391 Andrey Mazo
-https://t.me/AndreyMazo
+If quistions arise dont hezitate to ask them, will answere with pleasure  
++79219507391 Andrey Mazo  
+https://t.me/AndreyMazo  
+
 
 
