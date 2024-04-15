@@ -12,6 +12,7 @@ from django.urls import reverse
 from .forms import MusicFilesFilterForm, MusicFilesForm, SignupForm
 from .models import CustomUser, MusicFiles
 from pydub import AudioSegment 
+from django.contrib import messages
 
 def signup_without_confirmation(request):
     if request.method == 'POST':
@@ -99,6 +100,7 @@ def cutter_file(request, pk1, pk2): # Номер трека из библиот�
     ten_seconds = 10 * 1000
     first_10_seconds = song_for_cut[:ten_seconds] 
     # # last_5_seconds = song[-5000:] 
-    first_10_seconds.export(f"media/{request_user_id}/new{pk1}{song.title}.mp3", format="mp3") 
+    first_10_seconds.export(f"media/{request_user_id}/new{pk1}{song.title}.mp3", format="mp3")
+    messages.success(request, "Создан новый файл new" )
     return HttpResponseRedirect(reverse('musiclib:home'))
 
