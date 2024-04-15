@@ -1,0 +1,107 @@
+
+<style>
+    .navbar{
+        position: fixed;
+         bottom: 0px;
+         left: 300px;
+         width: 1300px;
+         height: 170px;
+    }
+     
+    #header_info {
+      position: absolute;
+      top: 0;
+      left: 0;
+      /* hsl(101, 77%, 83%); */
+        background: #65e040;
+        width: 40%;
+        height: auto;
+    }
+
+    #container {
+        background-color:transparent !important;
+        width: 200%;
+        height: 1500px;
+    }
+    
+    #navigation {
+      visibility: hidden;
+      position: absolute;
+        bottom: 420px;
+        left: 1000px;
+      
+      background: #40E0D0;
+      width: 40%;
+      height: 6%;
+    }
+    
+    #sidebar {
+        position: absolute;
+          top: 130px;
+          left: 20px;
+        background: #40E0D0;
+        width: 70%;
+        height: 580px;
+    }
+    
+
+    #clear {
+        clear: both;
+    }
+    
+    #footer {
+      position: relative;
+      bottom: 00px;
+      background-color:#65e040;
+      text-align: center;
+     width: 1130px;
+     height: 40px;
+     
+    }
+    </style>
+
+            <div id="sidebar" style="overflow-y:scroll;">
+                <div>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{file_filter_form.as_p}}
+                        <input type="submit" value="Поиск">
+                    </form>
+                  <table class="table table-dark table-striped">
+                      
+                    <thead>                  
+                            <h3 style="text-align: center;"> Имя пользователя: {{request_user_email}}   </h3>           
+                    </thead>
+                        <tbody>
+                          <thead>
+                            <tr>
+                              <th scope="col">Айди</th>
+                              <th scope="col">Название трека</th>
+                              <th scope="col">Обрезка</th>
+                            </tr>
+                          </thead>
+                          {% for object in customuser_queryset %}
+                                  <tbody>
+                                    <td>
+                                       <audio controls >
+                                            <source src=" /media/{{ request_user_id }}/{{object.title}}.mp3" type="audio/mp3">
+                                        </audio>  
+                                    </td>    
+                                    <td>
+                                        <a class="btn.btn-default" href="/media/{{ request_user_id }}/{{object.title}}.mp3" >{{object.pk}} {{object.title}}</a>                           
+                                    </td>
+                                    <td>
+                                        <a class="btn.btn-default" href="{% url 'musiclib:cutter_file' object.pk request_user_id %}" >Обрезка трека</a>
+                                    </td>
+                                  </tbody>  
+                          {% endfor %}
+                        </tbody>
+                  </table>
+            
+                </div>
+            </div>
+
+            <div id="footer">
+                <a class="btn.btn-default" href="{% url 'musiclib:upload'  %}" >Переход на загрузку трека</a>
+            </div>
+    

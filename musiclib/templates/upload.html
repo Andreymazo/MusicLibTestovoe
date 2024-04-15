@@ -1,0 +1,31 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="col-md-4 mb-3">
+                        
+                        {{ form.non_field_errors }}
+                        <div class="fieldWrapper">
+                            {{ form.title.errors }}
+                            <label for="{{ form.title.id_for_label }}">Название трека: </label>
+                            {{ form.title }}
+                        </div>
+                        <div class="fieldWrapper">
+                            {{ form.file.errors }}
+                            <label for="{{ form.file.id_for_label }}">Файл: </label>
+                            {{ form.file }}
+                        </div>
+                    </div>
+                    
+                        <button class="btn btn-primary" type="submit">Submit form</button>
+                    
+            </form>
+        </div> 
+    </body>
+</html>
+

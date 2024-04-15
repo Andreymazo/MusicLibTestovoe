@@ -1,0 +1,294 @@
+{%extends 'worktimeprivate/templates/base.html'%}
+
+{% load render_table from django_tables2 %}
+
+  {% block content %}
+  {% include 'worktimeprivate/includes/main_menu.html' %}
+ 
+  <style>
+.navbar{
+    position: fixed;
+     bottom: 0px;
+     left: 300px;
+     width: 1300px;
+     height: 170px;
+}
+ 
+#header_info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* hsl(101, 77%, 83%); */
+    background: #65e040;
+    width: 40%;
+    height: auto;
+}
+
+#container {
+    background-color:transparent !important;
+    
+    width: 200%;
+    height: 1500px;
+}
+
+#navigation {
+  visibility: hidden;
+  position: absolute;
+    bottom: 420px;
+    left: 1000px;
+  
+  background: #40E0D0;
+  width: 40%;
+  height: 6%;
+}
+
+#sidebar {
+    position: absolute;
+      top: 430px;
+      left: 20px;
+    background: #40E0D0;
+    width: 40%;
+    height: 280px;
+}
+
+#content {
+  position: absolute;
+  top: 0;
+  background: #40E0D0;
+  z-index: 9;
+  left: 1150px;
+  max-width: 15em;
+}
+#contentheader {
+  cursor: move;
+  z-index: 10;
+}
+#form_date {
+  background: #65e040;
+}
+#input-group-text{
+  background: #e0405b;
+}
+
+#clear {
+    clear: both;
+}
+
+#footer {
+  position: relative;
+  bottom: -270px;
+  background-color:#65e040;
+ width: 600px;
+ height: 40px;
+ 
+}
+
+ 
+      </style>
+<H3>Calendar<H3>
+  <form id="form_date" method="post" enctype="multipart/form-data" class="form-control">
+    {% csrf_token %}
+    <div>
+      Начало работы сотрудника: {{date_start_form.date_start}}
+    </div>
+    <div>
+      Конец работы сотрудника: {{date_end_form.date_end}}
+    </div>
+    <div>
+      {{country_form}}
+    </div>
+    <p>
+      {{country_form_2}}
+    </p>
+        <button class="btn btn-outline-secondary" type="submit" id="input-group-text">Button</button>
+        {{request_user}}  <a class="btn.btn-default" href="{% url 'worktimeprivate:employee_employer_lists_fast' %}" >Fast lst</a>
+  </form>
+  
+    <body>
+     
+        <div id="container">
+            <div id="header_info">
+            <h2>Info for period</h2>
+              <div>
+                Total days: {{total_days}} 
+              </div>
+              <div>
+                Days work: {{days_work}} 
+              </div>
+              <div>
+                Holidays (National + Sat, Sun): {{days_holiday}}
+              </div>
+              <div>
+                Employee:
+              </div>
+              <div>
+                Holidays emploee concerned:
+              </div>
+            
+            </div>  
+<script>
+   function closePopupEmployeeList() {
+    document.getElementById("navigationnn").style.visibility='hidden';
+   } 
+   function openPopupEmployeeList() {
+    document.getElementById("navigationnn").style.visibility='visible'; 
+   }   
+  function closePopupCalendar() {
+    document.getElementById("sidebarin").style.visibility='hidden';
+   } 
+  function openPopupCalendar() {
+    document.getElementById("sidebarin").style.visibility='visible';
+   }
+
+</script>
+
+            <button onclick="closePopupEmployeeList()">Employee list close </button>
+            <button onclick="openPopupEmployeeList()">Employee list open</button>
+            <div id="navigationnn">
+                <div>
+
+                  <table class="table table-dark table-striped">
+                      <thead>
+                        <tr>
+                            <th scope="col">Employee name </th>            
+                        </tr>
+                      </thead>
+                        <tbody>
+                          {% for object in employee_queryset %}
+                                  <tr>     
+                                      <td>
+                                              <a class="btn.btn-default" href="{% url 'worktimeprivate:employer_detail_func' object.pk %}" >{{object.pk}} {{object.name}}</a>
+                                      </td>
+                                  </tr>
+                          {% endfor %}
+                        </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+           
+                 
+            <div id="sidebar" style="overflow-y:scroll;">
+              <button onclick="closePopupCalendar()">Calendar close </button>
+              <button onclick="openPopupCalendar()">Calendar open</button>  
+              <div id="sidebarin">
+              <h2>Calendar as table</h2>
+                <div>
+                    <table class="table table-dark table-striped">
+                      <thead>
+                        
+                        <tr>
+                          {%for item in num_days_values%}            
+                              <th scope="col">Year: {{item.0}}</th>
+                              <th scope="col">Month: {{item.1}}</th>
+                      </thead>
+                      <tbody>
+                            {% for item_days in item.2%}
+                            <tr>
+                                <td>{{item_days.2}}</td>
+                                <td>{{item_days.0}}</td>
+                            </tr>
+                        {%endfor%}
+                      {% endfor %}
+                      </tbody>
+                    </table> 
+                </div>
+              </div>
+              
+            </div>   
+
+        
+            
+          <div id="content">   
+              <button onclick="closePopupEmployerList()">Calendar close </button>
+              <button onclick="openPopupEmployerList()">Calendar open</button> 
+              <div id="contentt"> 
+              <div id="contentheader">Employer list</div>
+              
+                  <table class="table table-dark table-striped">
+                      <thead>
+                        <tr>   
+                            <th scope="col">Employer name </th>             
+                        </tr>
+                      </thead>
+                      <tbody>
+                    {% for object in employer_queryset %}
+                            <tr>
+                                <td>
+                                        <a class="btn.btn-default" href="{% url 'worktimeprivate:employer_detail_func' object.pk %}" >{{object.pk}} {{object.name}}</a>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                      </tbody>
+                            
+          </div>   
+        </div>
+
+            
+            <script>
+            function closePopupEmployerList() {
+     document.getElementById("contentt").style.visibility='hidden';
+             } 
+   function openPopupEmployerList() {
+    document.getElementById("contentt").style.visibility='visible';
+             } 
+            dragElement(document.getElementById(("content")));
+            
+            function dragElement(elmnt) {
+              var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+              if (document.getElementById(elmnt.id + "header")) {
+                /* if present, the header is where you move the DIV from:*/
+                document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+              } else {
+                /* otherwise, move the DIV from anywhere inside the DIV:*/
+                elmnt.onmousedown = dragMouseDown;
+              }
+            
+              function dragMouseDown(e) {
+                e = e || window.event;
+                // get the mouse cursor position at startup:
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                // call a function whenever the cursor moves:
+                document.onmousemove = elementDrag;
+              }
+            
+              function elementDrag(e) {
+                e = e || window.event;
+                // calculate the new cursor position:
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // set the element's new position:
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+              }
+            
+              function closeDragElement() {
+                /* stop moving when mouse button is released:*/
+                document.onmouseup = null;
+                document.onmousemove = null;
+              }
+            }
+            </script>
+                                
+
+
+
+            <div id="clear">
+            </div>
+                                       
+            <div id="footer">
+              <h4><a class="nav-link" href="{% url 'worktimeprivate:mssg_room' %}">Mssgs fm employee and data concerned</a>  
+              </h4>
+              
+            </div>
+        </div>
+        </body>
+       
+      {% endblock %}
+    </div>
+
+  
