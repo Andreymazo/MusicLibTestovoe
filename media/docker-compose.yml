@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  web:
+    container_name: web
+    build: ./src
+    command: daphne -b 0.0.0.0 -p 8000 phoenix.asgi:application
+    volumes:
+      - ./src/:/usr/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./dockers/envs/.env.local
+    depends_on:
+      - db
+      - redis
+
+  redis:
+    container_name: redis
+    image: redis:5-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/var/lib/redis/data/
+    restart: always
+
+
+  djano_q:
+      build: ./src
+      container_name: 'django_q'
+      command: python manage.py qcluster
+      restart: always
+      env_file:
+        - ./dockers/envs/.env.local
+        - ./dockers/envs/.env.local.db
+      depends_on:
+        - web
+        - redis
+
+  db:
+    container_name: db
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./dockers/envs/.env.local.db
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres_data:
+  redis_data:
