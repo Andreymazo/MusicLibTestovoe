@@ -10,8 +10,16 @@ or if you prefer SSH
         git clone git@github.com:Andreymazo/MusicLibTestovoe.git
 
 # Start:
+
+You must have docker-compose.
+
+If postgres running sudo
+
 ```cmd
-docker-compose up
+systemctl stop postgresql
+
+```cmd
+sudo docker-compose up
 ```
 
 
