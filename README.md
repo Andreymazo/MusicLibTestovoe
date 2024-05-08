@@ -15,12 +15,19 @@ You must have docker-compose.
 
 If postgres running sudo
 
-```cmd
-systemctl stop postgresql
+##
+                systemctl stop postgresql
 
-```cmd
-sudo docker-compose up
-```
+
+##
+                sudo docker-compose up
+
+if spicify postgres_db name:
+
+docker run -it -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=123456 -e POSTGRES_DB=musiclib postgres
+
+
+
 
 
 Django forms are used here (Easy registaration and login in django).   

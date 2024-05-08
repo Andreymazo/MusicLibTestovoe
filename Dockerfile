@@ -4,4 +4,5 @@ ENV PIP_ROOT_USER_ACTION=ignore
 WORKDIR /musiclib
 EXPOSE 8000
 COPY . /musiclib
-COPY ./requirements.txt .
+# COPY ./requirements.txt .
+# COPY musiclib/requirements.txt .
